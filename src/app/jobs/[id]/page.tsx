@@ -1,31 +1,34 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from "next/navigation";
 import { jobs } from "@/MockData/data";
 import { Job, useAppliedContext } from '@/utils/JobsContext';
 
 const DetailsPage = () => {
-  const { id } = useParams()
-  const jobId = Number(id)
-  
+  const { id } = useParams();
+  const jobId = Number(id);
+
   const jobContext = useAppliedContext();
+
+  const [individualJob, setIndividualJob] = useState<Job | undefined>(undefined);
+
+  useEffect(() => {
+    setIndividualJob(jobs.find((job) => job.id === jobId));
+  }, [jobId]);
 
   if (!jobContext) {
     return null;
   }
-  
+
   const { appliedJobs, setApplyJob } = jobContext
-
-  const individualJob = jobs.find((job) => job.id === jobId)
-
   const isAlreadyApplied = appliedJobs?.some((job: Job) => job.id === jobId);
 
   const applyForJob = () => {
     if(!isAlreadyApplied && individualJob){
       setApplyJob(individualJob);
     }
-
   }; 
+
 
   return (
     <div className="relative justify-center items-center p-2 gap-4 ">
