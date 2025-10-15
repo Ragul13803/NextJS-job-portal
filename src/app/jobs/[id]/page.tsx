@@ -2,17 +2,23 @@
 import React from 'react'
 import { useParams } from "next/navigation";
 import { jobs } from "@/MockData/data";
-import { useAppliedContext } from '@/utils/JobsContext';
+import { Job, useAppliedContext } from '@/utils/JobsContext';
 
 const DetailsPage = () => {
   const { id } = useParams()
   const jobId = Number(id)
   
-  const { appliedJobs, setApplyJob }: any = useAppliedContext()
+  const jobContext = useAppliedContext();
+
+  if (!jobContext) {
+    return null;
+  }
+  
+  const { appliedJobs, setApplyJob } = jobContext
 
   const individualJob = jobs.find((job) => job.id === jobId)
 
-  const isAlreadyApplied = appliedJobs?.some((job: any) => job.id === jobId);
+  const isAlreadyApplied = appliedJobs?.some((job: Job) => job.id === jobId);
 
   const applyForJob = () => {
     if(!isAlreadyApplied && individualJob){

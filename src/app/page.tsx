@@ -3,9 +3,10 @@
 import { jobs } from '@/MockData/data'
 import Link from 'next/link';
 import { useEffect, useState } from "react";
+import { Job, } from '@/utils/JobsContext';
 
 export default function Home() {
-  const [jobsData, setJobsData] = useState<any[]>([])
+  const [jobsData, setJobsData] = useState<Job[]>([])
 
   useEffect(() => {
     setJobsData(jobs)
@@ -17,8 +18,8 @@ export default function Home() {
         <h1 className="text-3xl font-bold ml-[44%]">Job List</h1>
         <div className='flex gap-4'>
         {jobsData.map((job, index) => (
-          <div key={index} className="bg-[#D1D3D4] my-4 p-4 rounded-lg flex flex-col sm:flex-row gap-4 items-center justify-between w-full sm:w-[48%] lg:w-[31%]">
-            <div className="w-full">
+          <div key={index} className="bg-[#D1D3D4] p-4 rounded-lg flex flex-col sm:flex-row gap-4 items-center justify-between w-full sm:w-[48%] lg:w-[31%] h-[210px]">
+            <div className="w-full mb-auto relative">
 
             <div className='flex flex-col sm:flex-row sm:items-start w-full gap-4 items-center'>
             <div className='flex flex-col text-center sm:text-left'>
@@ -44,11 +45,11 @@ export default function Home() {
             </div>
             </div>
             
-            <div className='m-4 '>
-              <Link href={`/jobs/${job.id}`} className='bg-[#476EAE] p-2 rounded-lg ml-[34%]'>View more</Link>
+           
             </div>
+            <div className='flex justify-center absolute bottom-6 ml-20'>
+              <Link href={`/jobs/${job.id}`} className='bg-[#476EAE] p-2 rounded-lg'>View more</Link>
             </div>
-
           </div>
         ))}
         </div>

@@ -4,7 +4,13 @@ import Link from 'next/link'
 import React from 'react'
 
 const Navbar = () => {
-  const { appliedJobs }: any = useAppliedContext()
+  const jobContext = useAppliedContext();
+
+  if (!jobContext) {
+    return null;
+  }
+
+  const { appliedJobs } = jobContext
   
   return (
     <div className='absolute w-[98vw] flex justify-between items-center bg-[#FFECC0] h-14 m-3 p-4 rounded-lg'>
